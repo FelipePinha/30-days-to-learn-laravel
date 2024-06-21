@@ -6,6 +6,8 @@ use App\Models\Job;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Mail\JobPosted;
+use Illuminate\Support\Facades\Mail;
 
 class JobController extends Controller
 {
@@ -40,6 +42,10 @@ class JobController extends Controller
             'salary' => request('salary'),
             'employer_id' => 1
         ]);
+
+        Mail::to('felipecar.dev@gmail.com')->queue(
+            new JobPosted()
+        );
 
         return redirect('/jobs');
     }
